@@ -39,3 +39,5 @@ class Filters {
         document.dispatchEvent(new CustomEvent('filter-selected', {detail: exams}));
     }
 }
+
+export default Filters;

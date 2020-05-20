@@ -17,11 +17,7 @@
 
         <!-- Custom JS -->
         <script defer src="js/moment.min.js"></script>
-        <script defer src="js/exam.js"></script>
-        <script defer src="js/exam-manager.js"></script>
-        <script defer src="js/filters.js"></script>
-        <script defer src="js/app.js"></script>
-        <script defer src="js/main.js"></script>
+        <script defer type="module" src="js/main.js"></script>
 
         <title>Esami</title>
     </head>
@@ -72,54 +68,54 @@
 
         <!-- Modal for the new exam form -->
         <div class="modal" id="add-modal" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Aggiungi un nuovo esame</h5>
-                <button type="button" class="close" id="close-modal" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <form role="form" method="POST" action="" id="add-form">
-                <div class="modal-body">              
-                    <div class="form-group">
-                      <label for='course'>Corso</label>
-                      <select class="form-control" name='course'>
-                        <option>Seleziona un corso...</option>
-                      </select>
-                    </div>
-
-                    <div class="form-group">
-                      <label for='credits'>Crediti</label>
-                      <input type='number' name='credits' class='form-control' disabled/>
-                    </div>
-    
-                    <div class="form-group">
-                      <label for='score'>Voto</label>
-                      <!-- easier testing of server side validation
-                      <input type='number' step='any' min=0 max=31 required name='examscore' class='form-control' />
-                      -->
-                      <input type='number' min=18 max=31 required name='score' class='form-control' />
-                    </div>
-    
-                    <div class="form-group">
-                      <label for='date'>Data</label>
-                      <input type='date' name='date' required class='form-control'/>
-                    </div>
-                    
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Aggiungi un nuovo esame</h5>
+                  <button type="button" class="close" id="close-modal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
-                <div class="modal-footer">
-                  <div class="form-group">
-                    <div>
-                        <button type="submit" class="btn btn-primary">Salva</button>
+                <form role="form" method="POST" action="" id="add-form">
+                  <div class="modal-body">              
+                      <div class="form-group">
+                        <label for='course'>Corso</label>
+                        <select class="form-control" name='course'>
+                          <option>Seleziona un corso...</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label for='credits'>Crediti</label>
+                        <input type='number' name='credits' class='form-control' disabled/>
+                      </div>
+      
+                      <div class="form-group">
+                        <label for='score'>Voto</label>
+                        <!-- easier testing of server side validation
+                        <input type='number' step='any' min=0 max=31 required name='examscore' class='form-control' />
+                        -->
+                        <input type='number' min=18 max=31 required name='score' class='form-control' />
+                      </div>
+      
+                      <div class="form-group">
+                        <label for='date'>Data</label>
+                        <input type='date' name='date' required class='form-control'/>
+                      </div>
+                      
+                  </div>
+                  <div class="modal-footer">
+                    <div class="form-group">
+                      <div>
+                          <button type="submit" class="btn btn-primary">Salva</button>
+                      </div>
                     </div>
                   </div>
-                </div>
-    
-              </form>
+      
+                </form>
+              </div>
             </div>
           </div>
-        </div>
         
     </body>
 </html>

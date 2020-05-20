@@ -1,5 +1,7 @@
 "use strict";
 
+import App from './app.js';
+
 // getting the two containers
 const examContainer = document.querySelector('#my-exams');
 const sidebarContainer = document.querySelector('#sidebar');

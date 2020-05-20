@@ -1,19 +1,30 @@
+import Exam from './exam.js';
+
 class ExamManager {
     
     constructor() {
-        this.exams = [
-            new Exam('MF0034', 'Algoritmi I', 9, '2020-02-01', '28'),
-            new Exam('MF0158', 'Basi di dati e sistemi informativi', 6, '2020-02-06', '30'),
-            new Exam('MF0363', 'Paradigmi di programmazione', 9, '2020-02-15','26'),
-            new Exam('MF0054', 'Algoritmi II', 9, '2019-09-10', '27'),
-        ];
+        this.exams = [];
     }
 
     /**
-     * Build the list of my exams
+     * Get the list of my exams
      */
-    getPassedExams() {
-        return this.exams;
+    async getPassedExams() {
+        let response = await fetch('/exams');
+        const examsJson = await response.json();
+        if (response.ok) {
+            this.exams = examsJson.map((ex) => Exam.from(ex));
+            for (const exam of this.exams){
+                let response = await fetch(`/courses/${exam.code}`);
+                const courseJson = await response.json();
+                if(response.ok) {
+                    exam.credits = courseJson.credits;
+                }
+            }
+            return this.exams;
+        } else {
+            throw examsJson;  // an object with the error coming from the server
+        }
     }
 
     /**
@@ -21,17 +32,37 @@ class ExamManager {
      * @param {Exam} exam 
      */
     addExam(exam) {
-        this.exams.push(exam);
+        return new Promise((resolve, reject) => {
+            fetch('/exams', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(exam), // stringify removes undefined fields
+            }).then((response) => {
+                if(response.ok) {
+                    resolve(null);
+                } else {
+                    // analyze the cause of error
+                    response.json()
+                    .then( (obj) => {reject(obj);} ) // error msg in the response body
+                    .catch( (err) => {reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+                      }
+            }).catch( (err) => {reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+        });
     }
 
     /**
-     * Get the list of courses for which exams are available
+     * Get the list of courses
      */
-    getCourses() {
-        return [
-            {name: "Metodologie di programmazione per il web", code: "MF0163", credits: 6},
-            {name: "Reti I", code: "S1609", credits: 6},
-        ];
+    async getCourses() {
+        let response = await fetch('/courses');
+        const courseJson = await response.json();
+        if (response.ok) {
+            return courseJson;
+        } else {
+            throw courseJson;  // an object with the error coming from the server
+        }
     }
 
     /**
@@ -39,6 +70,11 @@ class ExamManager {
      * @param {*} year 
      */
     getByYear(year) {
+        // OPTION 1: filtering the existing exams list, which should be updated periodically
         return this.exams.filter(ex => ex.date.isBetween(year+'-01-01', year+'-12-31', undefined, []));
+
+        // OPTION 2: calling an API, so that you are sure to have the most updated information
     }
 }
+
+export default ExamManager;

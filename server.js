@@ -14,7 +14,7 @@ app.use(morgan('tiny'));
 // every requests body will be considered as in JSON format
 app.use(express.json());
 
-// set up the 'client' component as a static website
+// set up the 'public' component as a static website
 app.use(express.static('public'));
 app.get('/', (req, res) => res.redirect('/index.html'));
 
