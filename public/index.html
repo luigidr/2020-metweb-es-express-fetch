@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html lang="it">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script defer src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+        <!-- Custom JS -->
+        <script defer src="js/moment.min.js"></script>
+        <script defer src="js/exam.js"></script>
+        <script defer src="js/exam-manager.js"></script>
+        <script defer src="js/filters.js"></script>
+        <script defer src="js/app.js"></script>
+        <script defer src="js/main.js"></script>
+
+        <title>Esami</title>
+    </head>
+
+    <body>
+        <header>
+            <nav class="navbar navbar-dark bg-primary">
+                <span class="navbar-brand mb-0">I miei esami</span>
+              </nav>
+              <div id="error-message"></div>
+        </header>
+
+        <main class="container-fluid mt-3">
+            <div class="row">
+                <p class="col">La tabella seguente riassume gli esami che ho sostenuto all'<a href="https://www.uniupo.it" title="Sito web di UPO">Universit&agrave; del Piemonte Orientale</a>, nella laurea in Informatica.</p>
+            </div>
+
+            <div class="row">
+                <aside class="col-lg-4 col">
+                    <nav id="sidebar" class="list-group">
+                        <a data-id="all" href="#" class="list-group-item list-group-item-action active">
+                          Tutto
+                        </a>
+                        <a data-id="2020" href="#" class="list-group-item list-group-item-action">2020</a>
+                        <a data-id="2019" href="#" class="list-group-item list-group-item-action">2019</a>
+                    </nav>
+                </aside>
+                <div class="col-lg-8 col">
+                    <table class="mx-auto table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Data</th>
+                                <th>Esame</th>
+                                <th>Crediti</th>
+                                <th>Voto</th>
+                            </tr>
+                        </thead>
+                        <tbody id="my-exams">
+                            <!-- JS will fill it -->
+                        </tbody>
+                    </table>
+    
+                    <!-- Add a new exam -->
+                    <button type="button" id="add-button" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">Nuovo esame</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Modal for the new exam form -->
+        <div class="modal" id="add-modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Aggiungi un nuovo esame</h5>
+                <button type="button" class="close" id="close-modal" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form role="form" method="POST" action="" id="add-form">
+                <div class="modal-body">              
+                    <div class="form-group">
+                      <label for='course'>Corso</label>
+                      <select class="form-control" name='course'>
+                        <option>Seleziona un corso...</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for='credits'>Crediti</label>
+                      <input type='number' name='credits' class='form-control' disabled/>
+                    </div>
+    
+                    <div class="form-group">
+                      <label for='score'>Voto</label>
+                      <!-- easier testing of server side validation
+                      <input type='number' step='any' min=0 max=31 required name='examscore' class='form-control' />
+                      -->
+                      <input type='number' min=18 max=31 required name='score' class='form-control' />
+                    </div>
+    
+                    <div class="form-group">
+                      <label for='date'>Data</label>
+                      <input type='date' name='date' required class='form-control'/>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                  <div class="form-group">
+                    <div>
+                        <button type="submit" class="btn btn-primary">Salva</button>
+                    </div>
+                  </div>
+                </div>
+    
+              </form>
+            </div>
+          </div>
+        </div>
+        
+    </body>
+</html>
